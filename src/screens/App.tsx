@@ -1,26 +1,29 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
+import {SafeAreaView, StyleSheet, View, Text, StatusBar, Button} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Color from '../../static/types/colors';
 
-const App: React.FC = () => (
-  <>
-    <StatusBar barStyle="dark-content" />
-    <SafeAreaView>
-      <View style={styles.body}>
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>YEGO - Technical Test</Text>
+const App: React.FC = () => {
+  const navigation = useNavigation();
+
+  const navigateToMapScreen = () => {
+    navigation.navigate('MapScreen' as never);
+  };
+
+  return (
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView>
+        <View style={styles.body}>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>YEGO - Technical Test</Text>
+            <Button title="Go to Map Screen" onPress={navigateToMapScreen} />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
-  </>
-);
+      </SafeAreaView>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   body: {
