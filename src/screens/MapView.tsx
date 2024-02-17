@@ -5,6 +5,7 @@ import {View, Text, Button} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {setVehicles} from 'src/redux/reducers/vehicles';
 import {Vehicle, VehicleStatus} from '@/types/vehicles';
+import MapComponent from 'src/components/Map';
 
 const MyComponent = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const MyComponent = () => {
     <View>
       <Text>Mi Vehiculo</Text>
       <Button title="SetVehicle" onPress={handleAddVehicle} />
+      <MapComponent />
     </View>
   );
 };
