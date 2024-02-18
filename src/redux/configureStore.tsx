@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import vehiclesReducer from './reducers/vehicles';
+import userLocationReducer from './reducers/userLocation';
 
 const store = configureStore({
   reducer: {
     vehicles: vehiclesReducer,
+    userLocation: userLocationReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
