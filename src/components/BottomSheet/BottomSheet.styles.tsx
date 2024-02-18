@@ -34,10 +34,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 5,
   },
-  batteryImage: {
-    width: 20,
-    height: 20,
-  },
   locationText: {
     paddingLeft: 15,
   },

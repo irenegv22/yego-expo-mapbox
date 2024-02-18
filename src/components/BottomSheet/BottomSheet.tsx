@@ -4,6 +4,8 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {BottomSheetMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {Vehicle} from '@/types/vehicles';
+import {FontAwesome} from '@expo/vector-icons';
+import Color from '@/types/colors';
 
 interface BottomSheetProps {
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
@@ -25,7 +27,16 @@ const BottomSheetComponent: FC<BottomSheetProps> = ({
   currentIndex,
 }) => {
   const scooterImage = require('@/images/icon_scooter.png');
-  const batteryImage = require('@/images/icon_battery.png');
+
+  const BatteryIcon = () => {
+    if (vehicleInfo.battery >= 80) {
+      return <FontAwesome name="battery-full" size={20} color={Color.GREEN} />;
+    } else if (vehicleInfo.battery >= 60) {
+      return <FontAwesome name="battery-3" size={20} color={Color.ORANGE} />;
+    } else if (vehicleInfo.battery > 20) {
+      return <FontAwesome name="battery-2" size={20} color={Color.ORANGE} />;
+    } else return <FontAwesome name="battery-1" size={20} color={Color.RED} />;
+  };
 
   return (
     <BottomSheet ref={bottomSheetRef} index={0} snapPoints={snapPoints} enableHandlePanningGesture={false}>
@@ -42,7 +53,7 @@ const BottomSheetComponent: FC<BottomSheetProps> = ({
           <View style={styles.infoContainer}>
             <Text style={styles.title}>{vehicleInfo.name}</Text>
             <View style={styles.moreInfoContainer}>
-              <Image source={batteryImage} style={styles.batteryImage} resizeMode="contain" />
+              <BatteryIcon />
               <Text> {vehicleInfo.battery} %</Text>
               <View style={styles.locationText}>
                 <Text>📍{vehicleDistance} m</Text>
