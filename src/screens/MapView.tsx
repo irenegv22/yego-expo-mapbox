@@ -25,9 +25,14 @@ const MyComponent = () => {
     }
   };
 
-  const handleVehiclesIcon = (status: VehicleStatus) => {
-    if (status !== undefined && status !== null) {
-      return VehicleStatusIcons[status];
+  const handleVehiclesIcon = (vehicle: Vehicle) => {
+    if (vehicle.id === selectedVehicle.id) {
+      const selectedIcon = require('@/images/icon_scooter_green.png');
+      return selectedIcon;
+    }
+
+    if (vehicle.status !== undefined && vehicle.status !== null) {
+      return VehicleStatusIcons[vehicle.status];
     }
     const defaultIcon = require('@/images/icon_scooter_green.png');
     return defaultIcon;
@@ -63,7 +68,7 @@ const MyComponent = () => {
           <Marker
             key={vehicle.id}
             coordinate={{latitude: vehicle.lat, longitude: vehicle.lng}}
-            image={handleVehiclesIcon(vehicle.status)}
+            image={handleVehiclesIcon(vehicle)}
             onPress={() => handleMarkerPress(vehicle, id)}
           />
         ))}
