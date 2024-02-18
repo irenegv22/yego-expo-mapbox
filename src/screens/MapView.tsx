@@ -13,12 +13,13 @@ import BottomSheetComponent from 'src/components/BottomSheet/BottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {locationService} from 'src/services/locationService';
 import {locationPermissionAlert} from 'src/alerts/locationPermissionAlert';
-import {selectUserLocation} from 'src/redux/selectors/userLocation';
+import {selectUserLocationMemoized} from 'src/redux/selectors/userLocation';
+import {calculateDistance} from 'src/utils/distance.util';
 
 const MyComponent = () => {
   const dispatch = useDispatch();
   const vehicles = useSelector(selectVehicles);
-  const userLocation = useSelector(selectUserLocation);
+  const userLocation = useSelector(selectUserLocationMemoized);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -72,6 +73,10 @@ const MyComponent = () => {
     return;
   };
 
+  const handleUserVehicleDistance = (vehicle: Vehicle) => {
+    return calculateDistance(userLocation.latitude, userLocation.longitude, vehicle.lat, vehicle.lng);
+  };
+
   return (
     <View>
       <MapView
@@ -94,7 +99,12 @@ const MyComponent = () => {
         ))}
       </MapView>
       {selectedVehicle && (
-        <BottomSheetComponent bottomSheetRef={bottomSheetRef} snapPoints={snapPoints} vehicleInfo={selectedVehicle} />
+        <BottomSheetComponent
+          bottomSheetRef={bottomSheetRef}
+          snapPoints={snapPoints}
+          vehicleInfo={selectedVehicle}
+          vehicleDistance={handleUserVehicleDistance(selectedVehicle)}
+        />
       )}
     </View>
   );

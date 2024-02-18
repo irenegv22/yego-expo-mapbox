@@ -9,9 +9,10 @@ interface BottomSheetProps {
   bottomSheetRef: React.RefObject<BottomSheetMethods>;
   snapPoints: string[];
   vehicleInfo: Vehicle;
+  vehicleDistance: number;
 }
 
-const BottomSheetComponent: FC<BottomSheetProps> = ({bottomSheetRef, snapPoints, vehicleInfo}) => {
+const BottomSheetComponent: FC<BottomSheetProps> = ({bottomSheetRef, snapPoints, vehicleInfo, vehicleDistance}) => {
   const scooterImage = require('@/images/icon_scooter.png');
   const batteryImage = require('@/images/icon_battery.png');
 
@@ -27,7 +28,7 @@ const BottomSheetComponent: FC<BottomSheetProps> = ({bottomSheetRef, snapPoints,
             <Image source={batteryImage} style={styles.batteryImage} resizeMode="contain" />
             <Text> {vehicleInfo.battery} %</Text>
             <View style={styles.locationText}>
-              <Text>📍130m</Text>
+              <Text>📍{vehicleDistance} m</Text>
             </View>
           </View>
         </View>

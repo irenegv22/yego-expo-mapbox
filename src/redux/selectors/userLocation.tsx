@@ -1,6 +1,9 @@
+import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../configureStore';
 
-export const selectUserLocation = (state: RootState) => ({
-  latitude: state.userLocation.latitude,
-  longitude: state.userLocation.longitude,
-});
+const selectUserLocation = (state: RootState) => state.userLocation;
+
+export const selectUserLocationMemoized = createSelector([selectUserLocation], userLocation => ({
+  latitude: userLocation.latitude,
+  longitude: userLocation.longitude,
+}));
