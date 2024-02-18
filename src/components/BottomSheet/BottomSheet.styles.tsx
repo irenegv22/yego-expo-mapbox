@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 25,
+    marginHorizontal: 20,
   },
   imageContainer: {
     flex: 1,
@@ -40,6 +40,28 @@ const styles = StyleSheet.create({
   },
   locationText: {
     paddingLeft: 15,
+  },
+  leftContainer: {
+    flex: 0.1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  rightContainer: {
+    flex: 0.1,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  centerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+    height: '100%',
+  },
+  arrowIcon: {
+    fontSize: 40,
+    color: Color.GREY,
+    fontWeight: '100',
   },
 });
 

@@ -6,6 +6,7 @@ enum Color {
     WHITE = '#ffffff',
     RED = '#e1485c',
     BLUE = '#39a3ff',
+    GREY = '#B1B9B3',
   
     ERROR = '#ff3b30',
     SUCCESS = '#4cd964',
