@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 5,
   },
@@ -60,9 +60,14 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     fontSize: 40,
-    color: Color.GREY,
     fontWeight: '100',
   },
+  arrowIconEnable:{
+    color: Color.GREY,
+  },
+  arrowIconDisable:{
+    color: Color.GREY_DISABLED,
+  }
 });
 
 export default styles;

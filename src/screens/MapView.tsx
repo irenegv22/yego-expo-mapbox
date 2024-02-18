@@ -20,19 +20,21 @@ const MyComponent = () => {
   const dispatch = useDispatch();
   const vehicles = useSelector(selectVehicles);
   const userLocation = useSelector(selectUserLocationMemoized);
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>();
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(vehicles[0]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['20%'], []);
 
   useEffect(() => {
-    getVehicles();
     handleUserLocation();
+    getVehicles();
   }, []);
 
-  const handleMarkerPress = (vehicle: Vehicle) => {
+  const handleMarkerPress = (vehicle: Vehicle, id: number) => {
     if (vehicle.status === VehicleStatus.AVAILABLE) {
       setSelectedVehicle(vehicle);
+      setCurrentIndex(id);
     }
   };
 
@@ -40,13 +42,41 @@ const MyComponent = () => {
     try {
       const vehicles: Vehicle[] = await get(Paths.TechnicalTest);
       if (vehicles as Vehicle[]) {
-        dispatch(setVehicles(vehicles));
+        const sortVehicles = addDistanceToVehicles(vehicles);
+        dispatch(setVehicles(sortVehicles));
       } else {
         return systemErrorAlert();
       }
     } catch (e) {
       return systemErrorAlert();
     }
+  };
+
+  const addDistanceToVehicles = (vehicles: Vehicle[]) => {
+    const userLat = userLocation.latitude;
+    const userLng = userLocation.longitude;
+
+    const updatedVehicles = vehicles.map(vehicle => {
+      if (vehicle.status === VehicleStatus.AVAILABLE) {
+        const distance = calculateDistance(userLat, userLng, vehicle.lat, vehicle.lng);
+        return {...vehicle, distance};
+      } else {
+        return vehicle;
+      }
+    });
+
+    updatedVehicles.sort((a, b) => {
+      if (a.distance !== undefined && b.distance !== undefined) {
+        return a.distance - b.distance;
+      } else if (a.distance === undefined && b.distance !== undefined) {
+        return 1;
+      } else if (a.distance !== undefined && b.distance === undefined) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    return updatedVehicles;
   };
 
   const handleVehiclesIcon = (status: VehicleStatus) => {
@@ -77,6 +107,16 @@ const MyComponent = () => {
     return calculateDistance(userLocation.latitude, userLocation.longitude, vehicle.lat, vehicle.lng);
   };
 
+  const handleOnLeftPress = () => {
+    setSelectedVehicle(vehicles[currentIndex - 1]);
+    setCurrentIndex(currentIndex - 1);
+  };
+
+  const handleOnRightPress = () => {
+    setSelectedVehicle(vehicles[currentIndex + 1]);
+    setCurrentIndex(currentIndex + 1);
+  };
+
   return (
     <View>
       <MapView
@@ -89,12 +129,12 @@ const MyComponent = () => {
         }}
         showsUserLocation={true}
       >
-        {vehicles.map(vehicle => (
+        {vehicles.map((vehicle, id) => (
           <Marker
             key={vehicle.id}
             coordinate={{latitude: vehicle.lat, longitude: vehicle.lng}}
             image={handleVehiclesIcon(vehicle.status)}
-            onPress={() => handleMarkerPress(vehicle)}
+            onPress={() => handleMarkerPress(vehicle, id)}
           />
         ))}
       </MapView>
@@ -104,6 +144,9 @@ const MyComponent = () => {
           snapPoints={snapPoints}
           vehicleInfo={selectedVehicle}
           vehicleDistance={handleUserVehicleDistance(selectedVehicle)}
+          onLeftPress={handleOnLeftPress}
+          onRightPress={handleOnRightPress}
+          currentIndex={currentIndex}
         />
       )}
     </View>

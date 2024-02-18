@@ -10,17 +10,30 @@ interface BottomSheetProps {
   snapPoints: string[];
   vehicleInfo: Vehicle;
   vehicleDistance: number;
+  onLeftPress: () => void;
+  onRightPress: () => void;
+  currentIndex: number;
 }
 
-const BottomSheetComponent: FC<BottomSheetProps> = ({bottomSheetRef, snapPoints, vehicleInfo, vehicleDistance}) => {
+const BottomSheetComponent: FC<BottomSheetProps> = ({
+  bottomSheetRef,
+  snapPoints,
+  vehicleInfo,
+  vehicleDistance,
+  onLeftPress,
+  onRightPress,
+  currentIndex,
+}) => {
   const scooterImage = require('@/images/icon_scooter.png');
   const batteryImage = require('@/images/icon_battery.png');
 
   return (
     <BottomSheet ref={bottomSheetRef} index={0} snapPoints={snapPoints} enableHandlePanningGesture={false}>
       <View style={styles.mainContainer}>
-        <TouchableOpacity style={styles.leftContainer}>
-          <Text style={styles.arrowIcon}>〈</Text>
+        <TouchableOpacity style={styles.leftContainer} onPress={onLeftPress} disabled={currentIndex === 0 ?? false}>
+          <Text style={[styles.arrowIcon, currentIndex === 0 ? styles.arrowIconDisable : styles.arrowIconEnable]}>
+            〈
+          </Text>
         </TouchableOpacity>
         <View style={styles.centerContainer}>
           <View style={styles.imageContainer}>
@@ -37,8 +50,14 @@ const BottomSheetComponent: FC<BottomSheetProps> = ({bottomSheetRef, snapPoints,
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.rightContainer}>
-          <Text style={styles.arrowIcon}>〉</Text>
+        <TouchableOpacity
+          style={styles.rightContainer}
+          onPress={onRightPress}
+          disabled={vehicleDistance >= 1200 ?? false}
+        >
+          <Text style={[styles.arrowIcon, vehicleDistance >= 1200 ? styles.arrowIconDisable : styles.arrowIconEnable]}>
+            〉
+          </Text>
         </TouchableOpacity>
       </View>
     </BottomSheet>
