@@ -9,11 +9,13 @@ module.exports = function(api) {
           root: ['./src'],
           alias: {
             '@/screens': './src/screens',
+            '@/components': './src/components',
             "@/types": './static/types',
             "@/images": './static/images',
           }
         }
-      ]
+      ],
+      'react-native-reanimated/plugin',
     ]
   };
 };
