@@ -16,7 +16,8 @@ export default (config: ExpoConfig): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    supportsTablet: true
+    supportsTablet: true,
+    bundleIdentifier: "com.yegoexpo.app"
   },
   android: {
     package: 'com.yegoexpo.app',
@@ -29,7 +30,12 @@ export default (config: ExpoConfig): ExpoConfig => ({
   plugins: [
     //['expo-location', { isAndroidBackgroundLocationEnabled: false}, ],
     ['@rnmapbox/maps', {
-      RNMapboxMapsDownloadToken: "pk.eyJ1IjoidG9ybWVsaW5lYW4iLCJhIjoiY2xyNmNjNmcwMjhodDJzcG41cGh1cHFhMyJ9.MuxxMkhxEHHaJdRX6nxGeA"
+      RNMapboxMapsDownloadToken: "sk.eyJ1IjoiaXJlbmUyMiIsImEiOiJjbHNxZm5pNDYwd2gxMnFvNGthNmNjc211In0.mnxD56rnhVo3bDxSTMAJ7A"
     }]
-  ]
+  ],
+  extra: {
+    eas: {
+      projectId: '9d5610f8-148b-4eeb-82b8-bb11b1e93073'
+    }
+  },
 });
