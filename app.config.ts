@@ -33,9 +33,9 @@ export default (config: ExpoConfig): ExpoConfig => ({
       RNMapboxMapsDownloadToken: "sk.eyJ1IjoiaXJlbmUyMiIsImEiOiJjbHNxZm5pNDYwd2gxMnFvNGthNmNjc211In0.mnxD56rnhVo3bDxSTMAJ7A"
     }]
   ],
-  extra: {
-    eas: {
-      projectId: '9d5610f8-148b-4eeb-82b8-bb11b1e93073'
-    }
-  },
+  // extra: {
+  //   eas: {
+  //     projectId: '9d5610f8-148b-4eeb-82b8-bb11b1e93073'
+  //   }
+  // },
 });
