@@ -1,11 +1,12 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {selectVehicles} from '../redux/selectors/vehicles';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {setVehicles} from 'src/redux/reducers/vehicles';
 import {Vehicle, VehicleStatus} from '@/types/vehicles';
-import MapComponent from 'src/components/Map';
+// import MapComponent from 'src/components/Map';
+import MapView from 'react-native-maps';
 
 const MyComponent = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,16 @@ const MyComponent = () => {
     <View>
       <Text>Mi Vehiculo</Text>
       <Button title="SetVehicle" onPress={handleAddVehicle} />
-      <MapComponent />
+      <MapView style={styles.map}/>
+      {/* <MapComponent /> */}
     </View>
   );
 };
+const styles = StyleSheet.create({
+    map: {
+      width: '100%',
+      height: '100%',
+    },
+  });
 
 export default MyComponent;
