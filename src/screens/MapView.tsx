@@ -4,13 +4,11 @@ import {selectVehicles} from '../redux/selectors/vehicles';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {setVehicles} from 'src/redux/reducers/vehicles';
-import {Vehicle, VehicleStatus} from '@/types/vehicles';
+import {Vehicle, VehicleStatus, VehicleStatusIcons} from '@/types/vehicles';
 import {useEffect} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {Paths, get} from 'src/services/https';
 import {systemErrorAlert} from 'src/alerts/systemErrorAlert';
-import markerIcon1 from '../../static/images/icon_scooter_green.png';
-import markerIcon2 from '../../static/images/icon_scooter_black.png';
 
 const MyComponent = () => {
   const dispatch = useDispatch();
@@ -33,6 +31,14 @@ const MyComponent = () => {
     }
   };
 
+  const handleVehiclesIcon = (status: VehicleStatus) => {
+    if (status !== undefined && status !== null) {
+      return VehicleStatusIcons[status];
+    }
+    const defaultIcon = require('@/images/icon_scooter_green.png');
+    return defaultIcon;
+  };
+
   return (
     <View>
       <MapView
@@ -49,7 +55,7 @@ const MyComponent = () => {
             key={vehicle.id}
             coordinate={{latitude: vehicle.lat, longitude: vehicle.lng}}
             title={vehicle.name}
-            image={vehicle.status === VehicleStatus.AVAILABLE ? markerIcon1 : markerIcon2}
+            image={handleVehiclesIcon(vehicle.status)}
           />
         ))}
       </MapView>

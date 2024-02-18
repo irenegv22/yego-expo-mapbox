@@ -10,6 +10,7 @@ module.exports = function(api) {
           alias: {
             '@/screens': './src/screens',
             "@/types": './static/types',
+            "@/images": './static/images',
           }
         }
       ]
