@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo, useRef} from 'react';
 import {useSelector} from 'react-redux';
 import {selectVehicles} from '../redux/selectors/vehicles';
 import {View, StyleSheet} from 'react-native';
@@ -9,10 +9,15 @@ import {useEffect} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {Paths, get} from 'src/services/https';
 import {systemErrorAlert} from 'src/alerts/systemErrorAlert';
+import BottomSheetComponent from 'src/components/BottomSheet/BottomSheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const MyComponent = () => {
   const dispatch = useDispatch();
   const vehicles = useSelector(selectVehicles);
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ['20%'], []);
 
   useEffect(() => {
     getVehicles();
@@ -59,6 +64,7 @@ const MyComponent = () => {
           />
         ))}
       </MapView>
+      <BottomSheetComponent bottomSheetRef={bottomSheetRef} snapPoints={snapPoints} />
     </View>
   );
 };
