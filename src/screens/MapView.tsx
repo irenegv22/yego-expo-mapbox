@@ -1,11 +1,10 @@
-import React, {useMemo, useRef} from 'react';
+import React, {useMemo, useRef, useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {selectVehicles} from '../redux/selectors/vehicles';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {setVehicles} from 'src/redux/reducers/vehicles';
 import {Vehicle, VehicleStatus, VehicleStatusIcons} from '@/types/vehicles';
-import {useEffect} from 'react';
 import MapView, {Marker} from 'react-native-maps';
 import {Paths, get} from 'src/services/https';
 import {systemErrorAlert} from 'src/alerts/systemErrorAlert';
@@ -15,6 +14,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 const MyComponent = () => {
   const dispatch = useDispatch();
   const vehicles = useSelector(selectVehicles);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['20%'], []);
@@ -22,6 +22,12 @@ const MyComponent = () => {
   useEffect(() => {
     getVehicles();
   }, []);
+
+  const handleMarkerPress = (vehicle: Vehicle) => {
+    if (vehicle.status === VehicleStatus.AVAILABLE) {
+      setSelectedVehicle(vehicle);
+    }
+  };
 
   const getVehicles = async () => {
     try {
@@ -59,12 +65,14 @@ const MyComponent = () => {
           <Marker
             key={vehicle.id}
             coordinate={{latitude: vehicle.lat, longitude: vehicle.lng}}
-            title={vehicle.name}
             image={handleVehiclesIcon(vehicle.status)}
+            onPress={() => handleMarkerPress(vehicle)}
           />
         ))}
       </MapView>
-      <BottomSheetComponent bottomSheetRef={bottomSheetRef} snapPoints={snapPoints} />
+      {selectedVehicle && (
+        <BottomSheetComponent bottomSheetRef={bottomSheetRef} snapPoints={snapPoints} vehicleInfo={selectedVehicle} />
+      )}
     </View>
   );
 };
