@@ -28,10 +28,10 @@ export default (config: ExpoConfig): ExpoConfig => ({
     versionCode: 2023021701
   },
   plugins: [
-    //['expo-location', { isAndroidBackgroundLocationEnabled: false}, ],
-    ['@rnmapbox/maps', {
-      RNMapboxMapsDownloadToken: "sk.eyJ1IjoiaXJlbmUyMiIsImEiOiJjbHNxZm5pNDYwd2gxMnFvNGthNmNjc211In0.mnxD56rnhVo3bDxSTMAJ7A"
-    }]
+    ['expo-location', { isAndroidBackgroundLocationEnabled: false}, ],
+    // ['@rnmapbox/maps', {
+    //   RNMapboxMapsDownloadToken: "sk.eyJ1IjoiaXJlbmUyMiIsImEiOiJjbHNxZm5pNDYwd2gxMnFvNGthNmNjc211In0.mnxD56rnhVo3bDxSTMAJ7A"
+    // }]
   ],
   // extra: {
   //   eas: {
